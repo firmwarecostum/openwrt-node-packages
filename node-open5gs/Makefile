@@ -59,6 +59,12 @@ define Build/Compile
 	$(MAKE_FLAGS) \
 	npm_config_nodedir=$(STAGING_DIR)/usr/ \
 	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
+	npm install --prefer-offline --no-audit --global-style --install-strategy=shallow --no-save --omit=dev --no-package-lock
+	cd $(PKG_BUILD_DIR)/webui; \
+	$(MAKE_VARS) \
+	$(MAKE_FLAGS) \
+	npm_config_nodedir=$(STAGING_DIR)/usr/ \
+	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
 	npm run build --prefer-offline --no-audit --global-style --install-strategy=shallow --no-save --omit=dev --no-package-lock
 	rm -rf $(TMP_DIR)/npm-cache-$(TMPNPM)
 	rm -f $(PKG_BUILD_DIR)/webui/node_modules/.package-lock.json
