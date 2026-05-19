@@ -3,13 +3,13 @@ include $(TOPDIR)/rules.mk
 PKG_NPM_NAME:=open5gs
 PKG_NAME:=node-$(PKG_NPM_NAME)
 PKG_VERSION:=2.7.7
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 #PKG_SOURCE:=$(PKG_NPM_NAME)-$(PKG_VERSION).tgz
 #PKG_SOURCE_URL:=https://registry.npmjs.org/$(PKG_NPM_NAME)/-/
 #PKG_HASH:=skip
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE:=open5gs-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/open5gs/open5gs/archive/v$(PKG_VERSION)
 PKG_HASH:=skip
 
@@ -48,35 +48,35 @@ TARGET_CPPFLAGS+=$(FPIC)
 
 define Build/Compile
 	rm -rf $(PKG_BUILD_DIR)/prebuilds
-	rm -rf $(PKG_BUILD_DIR)/webui/package-lock.json
-	cd $(PKG_BUILD_DIR)/webui; \
+	mv $(PKG_BUILD_DIR)/webui $(PKG_BUILD_DIR)/open5gs
+	cd $(PKG_BUILD_DIR)/open5gs; \
 	$(MAKE_VARS) \
 	$(MAKE_FLAGS) \
 	npm_config_nodedir=$(STAGING_DIR)/usr/ \
 	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
 	npm cache clean --force
-	cd $(PKG_BUILD_DIR)/webui; \
-	$(MAKE_VARS) \
-	$(MAKE_FLAGS) \
-	npm_config_nodedir=$(STAGING_DIR)/usr/ \
-	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
-	npm install co --save
-	cd $(PKG_BUILD_DIR)/webui; \
+	cd $(PKG_BUILD_DIR)/open5gs; \
 	$(MAKE_VARS) \
 	$(MAKE_FLAGS) \
 	npm_config_nodedir=$(STAGING_DIR)/usr/ \
 	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
 	npm install
+	cd $(PKG_BUILD_DIR)/open5gs; \
+	$(MAKE_VARS) \
+	$(MAKE_FLAGS) \
+	npm_config_nodedir=$(STAGING_DIR)/usr/ \
+	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
+	npm run build
 	rm -rf $(TMP_DIR)/npm-cache-$(TMPNPM)
-	rm -f $(PKG_BUILD_DIR)/webui/node_modules/.package-lock.json
-	find $(PKG_BUILD_DIR)/webui/node_modules -type d -empty -print0 | xargs -0 -r rmdir || true
+	rm -f $(PKG_BUILD_DIR)/open5gs/node_modules/.package-lock.json
+	find $(PKG_BUILD_DIR)/open5gs/node_modules -type d -empty -print0 | xargs -0 -r rmdir || true
 endef
 
 define Package/node-open5gs/install
 	$(INSTALL_DIR) $(1)/usr/lib/node/$(PKG_NPM_NAME)
 	$(CP) $(PKG_BUILD_DIR)/{LICENSE,README.md} \
 		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
-	$(CP) $(PKG_BUILD_DIR)/webui/{node_modules,pages,server,src,static,package.json} \
+	$(CP) $(PKG_BUILD_DIR)/open5gs/{node_modules,pages,server,src,static,package.json,.*} \
 		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
 	$(INSTALL_DIR) $(1)/usr/lib/node_modules
 	$(LN) ../node/$(PKG_NPM_NAME) $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
