@@ -53,13 +53,13 @@ define Build/Compile
 	$(MAKE_FLAGS) \
 	npm_config_nodedir=$(STAGING_DIR)/usr/ \
 	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
-	npm clean-install --prefer-offline --no-audit --global-style --install-strategy=shallow -save --omit=dev --no-package-lock
+	npm clean-install
 	cd $(PKG_BUILD_DIR)/webui; \
 	$(MAKE_VARS) \
 	$(MAKE_FLAGS) \
 	npm_config_nodedir=$(STAGING_DIR)/usr/ \
 	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
-	npm run build --prefer-offline --no-audit --global-style --install-strategy=shallow -save --omit=dev --no-package-lock
+	npm run build
 	rm -rf $(TMP_DIR)/npm-cache-$(TMPNPM)
 	rm -f $(PKG_BUILD_DIR)/webui/node_modules/.package-lock.json
 	find $(PKG_BUILD_DIR)/webui/node_modules -type d -empty -print0 | xargs -0 -r rmdir || true
@@ -69,7 +69,7 @@ define Package/node-open5gs/install
 	$(INSTALL_DIR) $(1)/usr/lib/node/$(PKG_NPM_NAME)
 	$(CP) $(PKG_BUILD_DIR)/{LICENSE,README.md} \
 		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
-	$(CP) $(PKG_BUILD_DIR)/webui/{node_modules,pages,server,src,static,package.json} \
+	$(CP) $(PKG_BUILD_DIR)/webui/{node_modules,pages,server,src,static,package.json,.next} \
 		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
 	$(INSTALL_DIR) $(1)/usr/lib/node_modules
 	$(LN) ../node/$(PKG_NPM_NAME) $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
