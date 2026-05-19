@@ -48,18 +48,25 @@ TARGET_CPPFLAGS+=$(FPIC)
 
 define Build/Compile
 	rm -rf $(PKG_BUILD_DIR)/prebuilds
+	rm -rf $(PKG_BUILD_DIR)/webui/package-lock.json
 	cd $(PKG_BUILD_DIR)/webui; \
 	$(MAKE_VARS) \
 	$(MAKE_FLAGS) \
 	npm_config_nodedir=$(STAGING_DIR)/usr/ \
 	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
-	npm clean-install
+	npm cache clean --force
 	cd $(PKG_BUILD_DIR)/webui; \
 	$(MAKE_VARS) \
 	$(MAKE_FLAGS) \
 	npm_config_nodedir=$(STAGING_DIR)/usr/ \
 	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
-	npm install --save
+	npm install co --save
+	cd $(PKG_BUILD_DIR)/webui; \
+	$(MAKE_VARS) \
+	$(MAKE_FLAGS) \
+	npm_config_nodedir=$(STAGING_DIR)/usr/ \
+	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
+	npm install
 	rm -rf $(TMP_DIR)/npm-cache-$(TMPNPM)
 	rm -f $(PKG_BUILD_DIR)/webui/node_modules/.package-lock.json
 	find $(PKG_BUILD_DIR)/webui/node_modules -type d -empty -print0 | xargs -0 -r rmdir || true
