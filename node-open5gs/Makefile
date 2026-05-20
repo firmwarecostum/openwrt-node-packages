@@ -50,7 +50,7 @@ define Build/Compile
 	rm -rf $(PKG_BUILD_DIR)/prebuilds
 	mkdir -p $(PKG_BUILD_DIR)/usr/lib/node
 	cp -r $(PKG_BUILD_DIR)/webui $(PKG_BUILD_DIR)/usr/lib/node/open5gs
-	rm -rf $(PKG_BUILD_DIR)/usr/lib/node/open5gs/package-lock.json
+	#rm -rf $(PKG_BUILD_DIR)/usr/lib/node/open5gs/package-lock.json
 	cd $(PKG_BUILD_DIR)/usr/lib/node/open5gs; \
 	$(MAKE_VARS) \
 	$(MAKE_FLAGS) \
