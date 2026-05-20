@@ -78,7 +78,7 @@ define Package/node-open5gs/install
 	$(INSTALL_DIR) $(1)/usr/lib/node/$(PKG_NPM_NAME)
 	$(CP) $(PKG_BUILD_DIR)/{LICENSE,README.md} \
 		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
-	$(CP) $(PKG_BUILD_DIR)/usr/lib/node/open5gs/{node_modules,pages,server,src,static,package.json,.*} \
+	$(CP) $(PKG_BUILD_DIR)/usr/lib/node/open5gs/{node_modules,pages,server,src,static,package.json,.next} \
 		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
 	$(INSTALL_DIR) $(1)/usr/lib/node_modules
 	$(LN) ../node/$(PKG_NPM_NAME) $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
