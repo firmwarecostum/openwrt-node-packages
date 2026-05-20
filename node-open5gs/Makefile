@@ -48,15 +48,15 @@ TARGET_CPPFLAGS+=$(FPIC)
 
 define Build/Compile
 	rm -rf $(PKG_BUILD_DIR)/prebuilds
-	mkdir -p $(PKG_BUILD_DIR)/usr/lib/node/open5gs
-	cp -r $(PKG_BUILD_DIR)/webui/* $(PKG_BUILD_DIR)/usr/lib/node/open5gs/
-	#rm -rf $(PKG_BUILD_DIR)/usr/lib/node/open5gs/package-lock.json
+	mkdir -p $(PKG_BUILD_DIR)/usr/lib/node
+	cp -r $(PKG_BUILD_DIR)/webui $(PKG_BUILD_DIR)/usr/lib/node/open5gs
+	rm -rf $(PKG_BUILD_DIR)/usr/lib/node/open5gs/package-lock.json
 	cd $(PKG_BUILD_DIR)/usr/lib/node/open5gs; \
 	$(MAKE_VARS) \
 	$(MAKE_FLAGS) \
 	npm_config_nodedir=$(STAGING_DIR)/usr/ \
 	$(if $(CONFIG_NODEJS_NPM_KEEP_CACHE), npm_config_cache=$(NPM_CACHE_DIR)/npm-cache-$(PKG_NPM_NAME),npm_config_cache=$(TMP_DIR)/npm-cache-$(TMPNPM)) \
-	npm cache clean --force
+	#npm clean-install
 	cd $(PKG_BUILD_DIR)/usr/lib/node/open5gs; \
 	$(MAKE_VARS) \
 	$(MAKE_FLAGS) \
