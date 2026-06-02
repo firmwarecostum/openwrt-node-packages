@@ -61,13 +61,9 @@ define Build/Compile
 endef
 
 define Package/node-mumble-web/install
-	$(INSTALL_DIR) $(1)/usr/lib/node/$(PKG_NPM_NAME)
-	$(CP) $(PKG_BUILD_DIR)/{README.md,webpack.config.js,package.json} \
-		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
-	$(CP) $(PKG_BUILD_DIR)/{node_modules,app,loc,themes} \
-		$(1)/usr/lib/node/$(PKG_NPM_NAME)/
-	$(INSTALL_DIR) $(1)/usr/lib/node_modules
-	$(LN) ../node/$(PKG_NPM_NAME) $(1)/usr/lib/node_modules/$(PKG_NPM_NAME)
+	$(INSTALL_DIR) $(1)/
+	$(CP) $(PKG_BUILD_DIR)/* \
+		$(1)/
 endef
 
 define Package/node-mumble-web/postrm
