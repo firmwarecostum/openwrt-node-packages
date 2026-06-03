@@ -30,7 +30,7 @@ define Package/node-mumble-web
   CATEGORY:=Languages
   TITLE:=An HTML5 Mumble client
   URL:=https://www.npmjs.com/package/mumble-web
-  DEPENDS:=+libpthread +libc +libstdcpp
+  DEPENDS:=+libpthread +libc +libstdcpp +node
 endef
 
 define Package/node-mumble-web/description
