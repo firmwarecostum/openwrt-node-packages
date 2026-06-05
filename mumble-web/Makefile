@@ -3,7 +3,7 @@ include $(TOPDIR)/rules.mk
 PKG_NPM_NAME:=mumble-web
 PKG_NAME:=node-$(PKG_NPM_NAME)
 PKG_VERSION:=0.5.1
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 #PKG_SOURCE:=$(PKG_NPM_NAME)-$(PKG_VERSION).tgz
 #PKG_SOURCE_URL:=https://registry.npmjs.org/$(PKG_NPM_NAME)/-/
@@ -30,7 +30,7 @@ define Package/node-mumble-web
   CATEGORY:=Languages
   TITLE:=An HTML5 Mumble client
   URL:=https://www.npmjs.com/package/mumble-web
-  DEPENDS:=+libpthread +libc +libstdcpp
+  DEPENDS:=+libpthread +libc +libstdcpp +libopenssl
 endef
 
 define Package/node-mumble-web/description
