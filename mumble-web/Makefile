@@ -15,7 +15,7 @@ PKG_SOURCE_VERSION:=4ef594c8a097d180700d22d91e9a7fea3bab08ac
 PKG_MIRROR_HASH:=skip
 
 PKG_MAINTAINER:=Esa Aprilia Salsabila <esaapriliasalsabila@gmail.com>
-PKG_LICENSE:=
+PKG_LICENSE:=ISC
 PKG_LICENSE_FILES:=
 
 PKG_BUILD_DEPENDS:=node/host
