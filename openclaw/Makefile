@@ -29,7 +29,7 @@ define Package/node-openclaw
   CATEGORY:=Languages
   TITLE:=OpenClaw — Personal AI Assistant
   URL:=https://www.npmjs.com/package/openclaw
-  DEPENDS:=
+  DEPENDS:=+libpthread +libc +libstdcpp
 endef
 
 define Package/node-openclaw/description
